@@ -1,6 +1,7 @@
 (ns clojurescript-koans
-  (:require [clojurescript-koans.blanks :refer [__ ___]])
-  (:require-macros [clojurescript-koans.macros :refer [meditations]]))
+  (:require [clojurescript-koans.blanks :refer [__ ___]]
+            clojurescript-koans.runner)
+  (:require-macros [clojurescript-koans.runner :refer [meditations]]))
 
 (meditations "Equality"
   "We shall contemplate truth by testing reality, via equality"

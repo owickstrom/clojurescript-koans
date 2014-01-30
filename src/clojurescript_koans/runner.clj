@@ -1,4 +1,4 @@
-(ns clojurescript-koans.macros)
+(ns clojurescript-koans.runner)
 
 (defmacro safe-assert
   "Assertion with support for a message argument in all Clojure
@@ -9,9 +9,9 @@
 
 (defmacro fancy-assert
   "Assertion with fancy error messaging."
-  ([x] (clojurescript-koans.macros/fancy-assert x ""))
+  ([x] (clojurescript-koans.runner/fancy-assert x ""))
   ([x message]
-   `(try (clojurescript-koans.macros/safe-assert ~x ~message)
+   `(try (clojurescript-koans.runner/safe-assert ~x ~message)
          (catch js/Error e#
            (throw (js/Error. (str ~(when-let [line (:line (meta x))]
                                   (str "[LINE " line "] "))
@@ -20,8 +20,9 @@
   (let [topic (first forms)
         pairs (partition 2 (rest forms))
         tests (map (fn [[doc# code#]]
-                     `(clojurescript-koans.macros/fancy-assert ~code# ~doc#))
+                     `(clojurescript-koans.runner/fancy-assert ~code# ~doc#))
                    pairs)]
     `(try (do ~@tests)
           (catch js/Error e#
+            (clojurescript-koans.runner/add-koan ~topic e#)
             (.error js/console (str e#))))))
