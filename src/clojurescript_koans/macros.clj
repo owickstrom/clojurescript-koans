@@ -17,7 +17,8 @@
                                   (str "[LINE " line "] "))
                                '~message "\n" '~x)))))))
 (defmacro meditations [& forms]
-  (let [pairs (partition 2 forms)
+  (let [topic (first forms)
+        pairs (partition 2 (rest forms))
         tests (map (fn [[doc# code#]]
                      `(clojurescript-koans.macros/fancy-assert ~code# ~doc#))
                    pairs)]

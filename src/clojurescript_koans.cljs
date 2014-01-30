@@ -2,7 +2,7 @@
   (:require [clojurescript-koans.blanks :refer [__ ___]])
   (:require-macros [clojurescript-koans.macros :refer [meditations]]))
 
-(meditations
+(meditations "Equality"
   "We shall contemplate truth by testing reality, via equality"
   (= __ true)
 
@@ -36,7 +36,7 @@
   "When things cannot be equal, they must be different"
   (not= :fill-in-the-blank __))
 
-(meditations
+(meditations "Lists"
   "Lists can be expressed by function or a quoted form"
   (= '(__ __ __ __ __) (list 1 2 3 4 5))
 
@@ -79,7 +79,7 @@
           (catch js/Error e
             "No dice!"))))
 
-(meditations
+(meditations "Vectors"
   "You can use vectors in clojure as array-like structures"
   (= __ (count [42]))
 
@@ -110,7 +110,7 @@
   "Equality with collections is in terms of values"
   (= (list 1 2 3) (vector 1 2 __)))
 
-(meditations
+(meditations "Sets"
   "You can create a set by converting another collection"
   (= #{3} (set __))
 
@@ -129,7 +129,7 @@
   "But don't forget about the difference"
   (= __ (clojure.set/difference #{1 2 3 4 5} #{2 3 5})))
 
-(meditations
+(meditations "Maps"
   "Don't get lost when creating a map"
   (= {:a 1 :b 2} (hash-map :a 1 __ __))
 
@@ -182,7 +182,7 @@
 
 (defn square [n] (* n n))
 
-(meditations
+(meditations "Functions"
   "Calling a function is like giving it a hug with parentheses"
   (= __ (square 9))
 
@@ -224,7 +224,7 @@
         :cocked-pistol     :sirens
         :say-what?))
 
-(meditations
+(meditations "Conditionals"
   "You will face many decisions"
   (= __ (if (false? (= 4 5))
           :a
@@ -261,7 +261,8 @@
   "But admit it when you don't know what to do"
   (= __
      (explain-defcon-level :yo-mama)))
-(meditations
+
+(meditations "Higher-order Functions"
   "The map function relates a sequence to another"
   (= [__ __ __] (map (fn [x] (* 4 x)) [1 2 3]))
 
@@ -307,7 +308,7 @@
 (defmethod diet :carnivore [a] __)
 (defmethod diet :default [a] __)
 
-(meditations
+(meditations "Runtime Polymorphism"
   "Some functions can be used in different ways - with no arguments"
   (= __ (hello))
 
@@ -333,7 +334,8 @@
   "You may use a default method when no others match"
   (= "I don't know what Rich Hickey eats."
      (diet {:name "Rich Hickey"})))
-(meditations
+
+(meditations "Lazy Sequences"
   "There are many ways to generate a sequence"
   (= __ (range 1 5))
 
@@ -359,7 +361,7 @@
   (= (repeat 100 :foo)
      (take 100 (iterate ___ :foo))))
 
-(meditations
+(meditations "Sequence Comprehensions"
   "Sequence comprehensions can bind each element in turn to a symbol"
   (= __
      (for [x (range 6)]
@@ -395,7 +397,7 @@
 
 (defn square [x] (* x x))
 
-(meditations
+(meditations "Creating Functions"
   "One may know what they seek by knowing what they do not seek"
   (= [__ __ __] (let [not-a-symbol? (complement symbol?)]
                   (map not-a-symbol? [:a 'b "c"])))
@@ -444,7 +446,7 @@
 (defn factorial [n]
   __)
 
-(meditations
+(meditations "Recursion"
   "Recursion ends with a base case"
   (= true (is-even? 0))
 
@@ -483,7 +485,7 @@
    :city "Testerville"
    :state "TX"})
 
-(meditations
+(meditations "Destructuring"
   "Destructuring is an arbiter: it breaks up arguments"
   (= __ ((fn [[a b]] (str b a))
          [:foo :bar]))
@@ -522,8 +524,11 @@
 
 (def atomic-clock (atom 0))
 
-(meditations
-  "Atoms are like refs"
+(meditations "Atoms"
+  "In the beginning, there was number"
+  (= __ (deref atomic-clock))
+
+  "You can get the number more succinctly, but it's the same"
   (= __ @atomic-clock)
 
   "You can change at the swap meet"
@@ -570,7 +575,7 @@
   (present [this recipient]
     __))
 
-(meditations
+(meditations "Datatypes"
   "Holding records is meaningful only when the record is worthy of you"
   (= __ (.prize (Nobel. "peace")))
 
@@ -595,23 +600,21 @@
   "Surely we can implement our own by now"
   (= "You're really the Worst Picture, Final Destination 5... sorry."
      (with-out-str (present (Razzie. "Worst Picture") "Final Destination 5"))))
-(meditations
+
+(meditations "JavaScript Interopability"
   "You may have done more with JavaScript than you know"
   (= __ (type "warfare"))
 
-  "The dot signifies easy and direct Java interoperation"
-  (= __ (.toUpperCase "select * from"))
+  "The dot signifies easy and direct JavaScript interoperation"
+  (= __ (.toUpperCase "hello world"))
 
   "But instance method calls are very different from normal functions"
-  (= ["SELECT" "FROM" "WHERE"] (map ___ ["select" "from" "where"]))
+  (= ["HELLO" "WORLD"] (map ___ ["hello" "world"]))
 
-  "Constructing might be harder than breaking"
-  (= 10 (let [latch (java.util.concurrent.CountDownLatch. __)]
-          (.getCount latch)))
-
-  "Static methods are slashing prices!"
+  "Property functions are slashing prices!"
   (== __ (Math/pow 2 10)))
-(meditations
+
+(meditations "Partition"
   "To split a collection you can use the partition function"
   (= '((0 1) (2 3)) (__ 2 (range 4)))
 
@@ -629,11 +632,12 @@
 
   "... but notice that they will only pad up to the given sequence length"
   (= '((0 1 2) (3 4 5) __) (partition 3 3 [:these :are "my" "words"] (range 7))))
+
 (defn get-odds-and-evens [coll]
   (let [{odds true evens false} (group-by __ coll)]
     [odds evens]))
 
-(meditations
+(meditations "Group By"
 
   "To categorize a collection by some function, use group-by."
   (= __ (group-by count ["hello" "world" "foo" "bar"]))
