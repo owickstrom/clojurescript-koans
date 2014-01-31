@@ -1,20 +1,32 @@
 html {
-    font-family: Helvetica Neue, sans-serif;
+    font-family: Monaco, monospace;
     font-size: 14px;
+    background: #073642;
+    color: #93a1a1;
+}
+
+.koan {
+    padding: .3em 0;
+    border-top: 3px solid #002b36;
 }
 
 .koan.error {
-    color: #e00;
+    color: #dc322f;
 }
 
 .koan.success {
-    color: #0e0;
+    color: #859900;
 }
 
-.koan h2 {
-    font-size: 125%;
+.koan h2:before {
+    display: inline-block;
+    margin-right: .5em;
 }
 
-.koan pre {
-    font-family: Monaco, monospace;
+.koan.success h2:before {
+    content: '✓';
+}
+
+.koan.error h2:before {
+    content: '✘';
 }

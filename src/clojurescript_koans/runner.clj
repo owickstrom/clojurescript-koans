@@ -13,16 +13,16 @@
   ([x message]
    `(try (clojurescript-koans.runner/safe-assert ~x ~message)
          (catch js/Error e#
-           (throw (js/Error. (str ~(when-let [line (:line (meta x))]
-                                  (str "[LINE " line "] "))
-                               '~message "\n" '~x)))))))
+           (throw (js/Error. (str '~message "\n\n" '~x)))))))
+
 (defmacro meditations [& forms]
   (let [topic (first forms)
         pairs (partition 2 (rest forms))
         tests (map (fn [[doc# code#]]
                      `(clojurescript-koans.runner/fancy-assert ~code# ~doc#))
                    pairs)]
-    `(try (do ~@tests)
-          (catch js/Error e#
-            (clojurescript-koans.runner/add-koan ~topic e#)
-            (.error js/console (str e#))))))
+    `(clojurescript-koans.runner/add-koan
+       ~topic
+       (try (do ~@tests)
+            (catch js/Error e#
+              (.-message e#))))))
