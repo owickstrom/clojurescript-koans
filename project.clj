@@ -14,7 +14,7 @@
 
   :cljsbuild {
     :builds [{:id "clojurescript-koans"
-              :source-paths ["src"]
+              :source-paths ["src" "koans"]
               :compiler {
                 :output-to "clojurescript_koans.js"
                 :output-dir "out"
