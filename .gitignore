@@ -9,3 +9,4 @@ pom.xml
 .lein-plugins/
 .nrepl-port
 clojurescript_koans.js
+resources/public/js
