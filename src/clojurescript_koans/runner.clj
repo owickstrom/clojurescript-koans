@@ -14,8 +14,9 @@
         tests (map (fn [[doc# code#]]
                      `(clojurescript-koans.runner/fancy-assert ~code# ~doc#))
                    pairs)]
-    `(clojurescript-koans.runner/update-result
-       {:topic ~topic
-        :error (try (do ~@tests)
-                    (catch js/Error e#
-                      (.-message e#)))})))
+    `(let [res# {:topic ~topic
+                 :error (try (do ~@tests)
+                             (catch js/Error e#
+                               (.-message e#)))}]
+       (clojurescript-koans.runner/update-result res#)
+       (:error res#))))
