@@ -1,17 +1,10 @@
 (ns clojurescript-koans.runner)
 
-(defmacro safe-assert
-  "Assertion with support for a message argument in all Clojure
-  versions. (Pre-1.3.0, `assert` didn't accept a second argument and
-  threw an error.)"
-  ([x] `(clojurescript-kaons.macros/safe-assert ~x ""))
-  ([x msg] `(assert ~x ~msg)))
-
 (defmacro fancy-assert
   "Assertion with fancy error messaging."
   ([x] (clojurescript-koans.runner/fancy-assert x ""))
   ([x message]
-   `(try (clojurescript-koans.runner/safe-assert ~x ~message)
+   `(try (assert ~x ~message)
          (catch js/Error e#
            (throw (js/Error. (str '~message "\n\n" '~x)))))))
 
@@ -21,8 +14,8 @@
         tests (map (fn [[doc# code#]]
                      `(clojurescript-koans.runner/fancy-assert ~code# ~doc#))
                    pairs)]
-    `(clojurescript-koans.runner/add-koan
-       ~topic
-       (try (do ~@tests)
-            (catch js/Error e#
-              (.-message e#))))))
+    `(clojurescript-koans.runner/update-result
+       {:topic ~topic
+        :error (try (do ~@tests)
+                    (catch js/Error e#
+                      (.-message e#)))})))
