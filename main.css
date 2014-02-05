@@ -6,8 +6,7 @@ html {
 }
 
 .koan {
-    padding: .3em 0;
-    border-top: 3px solid #002b36;
+    border-top: 1px solid #002b36;
 }
 
 .koan.error {
@@ -16,6 +15,10 @@ html {
 
 .koan.success {
     color: #859900;
+}
+
+.koan h2 {
+    font-size: 100%;
 }
 
 .koan h2:before {
