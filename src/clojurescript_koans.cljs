@@ -600,9 +600,6 @@
      (with-out-str (present (Razzie. "Worst Picture") "Final Destination 5"))))
 
 (meditations "JavaScript Interopability"
-  "You may have done more with JavaScript than you know"
-  (= __ (type "warfare"))
-
   "The dot signifies easy and direct JavaScript interoperation"
   (= __ (.toUpperCase "hello world"))
 
@@ -610,7 +607,13 @@
   (= ["HELLO" "WORLD"] (map ___ ["hello" "world"]))
 
   "Property functions are slashing prices!"
-  (== __ (Math/pow 2 10)))
+  (== __ (Math/pow 2 10))
+
+  "Convert your ClojureScript greatness to Javascript"
+  (== __ (= [1 2 3] #js [1 2 3]))
+
+  "But it's only shallow"
+  (== __ (= [1 2 3] (.-numbers #js {"numbers" [1 2 3]}))))
 
 (meditations "Partition"
   "To split a collection you can use the partition function"
